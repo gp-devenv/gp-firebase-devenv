@@ -41,6 +41,11 @@ RUN apt-get update && \
 WORKDIR /opt
 RUN git clone https://github.com/romkatv/powerlevel10k.git
 
+# Setup sudo
+RUN apt-get update && \
+    apt-get install -y sudo
+RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
+
 # Default for users
 WORKDIR /etc/skel
 COPY .zshrc .
