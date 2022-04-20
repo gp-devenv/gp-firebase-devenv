@@ -8,6 +8,7 @@
     "build": "npm run build:version && npm run build:latest",
     "build:version": "docker build -t gpfister/firebase-devenv:$npm_package_version .",
     "build:latest": "docker build -t gpfister/firebase-devenv:latest .",
+    "build:develop": "docker build -t gpfister/firebase-devenv:develop .",
     "scan": "docker scan -f Dockerfile gpfister/firebase-devenv:$npm_package_version",
     "push": "npm run push:version && npm run push:latest",
     "push:version": "docker push gpfister/firebase-devenv:$npm_package_version",
