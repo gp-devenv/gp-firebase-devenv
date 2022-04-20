@@ -9,6 +9,8 @@ ENV NPM_VERSION="8.7"
 ENV FIREBASE_TOOLS_VERSION="10.7.0"
 ENV ANGULAR_VERSION="13.3.3"
 
+VOLUME [ "/home" ]
+
 # Set the timezone
 RUN apt-get update && \
     apt-get install tzdata -y
