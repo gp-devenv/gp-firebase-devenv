@@ -1,0 +1,35 @@
+{
+  "name": "firebase-devenv",
+  "version": "0.2.0",
+  "description": "Build and upload Docker dev envrionment suitable for Typescript with Firebase/Angular",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker run --name firebase-devenv-$npm_package_version-text -it gpfister/firebase-devenv:$npm_package_version /bin/zsh",
+    "build": "npm run build:version && npm run build:latest",
+    "build:version": "docker build -t gpfister/firebase-devenv:$npm_package_version .",
+    "build:latest": "docker build -t gpfister/firebase-devenv:latest .",
+    "scan": "docker scan -f Dockerfile gpfister/firebase-devenv:$npm_package_version",
+    "push": "npm run push:version && npm run push:latest",
+    "push:version": "docker push gpfister/firebase-devenv:$npm_package_version",
+    "push:latest": "docker push gpfister/firebase-devenv:latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpfister/firebase-devenv.git"
+  },
+  "keywords": [
+    "docker",
+    "dev",
+    "environment",
+    "devenv",
+    "typescript",
+    "firebase",
+    "angular"
+  ],
+  "author": "Greg PFISTER",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gpfister/firebase-devenv/issues"
+  },
+  "homepage": "https://github.com/gpfister/firebase-devenv#readme"
+}
