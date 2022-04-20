@@ -89,6 +89,7 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 | Image |  Ubuntu     | Node       |  NPM  |  Firebase Tools | Angular | Java                          |
 | ----- | ----------- | ---------- | ----- | --------------- | ------- | ----------------------------- |
 | 0.1.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.5.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |
+| 0.2.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |
 
 <div id="contrib">
 
