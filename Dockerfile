@@ -15,9 +15,13 @@ VOLUME [ "/home" ]
 RUN apt-get update && \
     apt-get install tzdata -y
 
+# Update all
+RUN apt-get update && \
+    apt-get full-upgrade -y
+
 # Install essential packages
 RUN apt-get update && \
-    apt-get install -y build-essential curl && \
+    apt-get install -y build-essential curl wget software-properties-common && \
     apt-get autoclean -y && \
     apt-get autoremove -y
 
@@ -45,6 +49,12 @@ RUN git clone https://github.com/romkatv/powerlevel10k.git
 RUN apt-get update && \
     apt-get install -y sudo
 RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
+
+# Add chromium
+RUN add-apt-repository ppa:saiarcot895/chromium-dev && \ 
+    apt-get update && \
+    apt-get install -y chromium-browser
+ENV CHROME_BIN=/usr/bin/chromium-browser
 
 # Default for users
 WORKDIR /etc/skel

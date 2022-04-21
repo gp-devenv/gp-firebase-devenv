@@ -23,6 +23,8 @@ Along with the basic requirements, the image provides:
 - additionnal tools like `less`, `curl`, `nmap`, ...
 - a `vscode` user account
 - `sudo` passwordless commands
+- `chromium` (actually `chromium-browser` on Ubuntu:20.04), for Angular unit
+  testing
 
 <div id="volumes" />
 
