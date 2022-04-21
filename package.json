@@ -8,7 +8,7 @@
     "start:develop": "docker run --name firebase-devenv-develop-test -it gpfister/firebase-devenv:develop /bin/zsh",
     "build": "npm run build:version && npm run build:latest",
     "build:version": "docker build --no-cache -t gpfister/firebase-devenv:$npm_package_version .",
-    "build:latest": "docker build --no-cache -t gpfister/firebase-devenv:latest .",
+    "build:latest": "docker build -t gpfister/firebase-devenv:latest .",
     "build:develop": "docker build --no-cache -t gpfister/firebase-devenv:develop .",
     "scan": "docker scan -f Dockerfile gpfister/firebase-devenv:$npm_package_version",
     "push": "npm run push:version && npm run push:latest",
