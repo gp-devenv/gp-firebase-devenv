@@ -1,6 +1,6 @@
 {
   "name": "firebase-devenv",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Build and upload Docker dev envrionment suitable for Typescript with Firebase/Angular",
   "main": "index.js",
   "scripts": {
