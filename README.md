@@ -1,4 +1,9 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![Ubuntu](https://img.shields.io/badge/ubuntu-20.04-orange)](https://ubuntu.com)
+
+[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](./LICENSE)
+[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](./LICENSE)
+[![AMD64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)](./LICENSE)
 
 # Firebase Dev Environment
 
@@ -47,6 +52,42 @@ When you are making change to the image, use :develop at the end of the
 [build](#build), [run](#run) and [scan](#scan) commands. The `develop` tag
 should not be pushed...
 
+### A word about cross-platform building
+
+In order to build x-platform, `docker buildx` must be enabled (more info
+[here](https://docs.docker.com/buildx/working-with-buildx/)). Then, instead of
+`build` command, `buildx` command should be used (for example:
+`npm run buildx:develop` will create a cross-platform image tagged `develop`).
+
+You will need to create a multiarch builder:
+
+```sh
+$ docker buildx create --name multiarch
+```
+
+Then, prior to building, you need to use it (example output on Mac M1):
+
+```sh
+$ docker buildx use multiarch && docker buildx inspect --bootstrap
+
+[+] Building 5.8s (1/1) FINISHED
+ => [internal] booting buildkit                                             5.8s
+ => => pulling image moby/buildkit:buildx-stable-1                            7s
+ => => creating container buildx_buildkit_multiarch0                          1s
+Name:   multiarch
+Driver: docker-container
+
+Nodes:
+Name:      multiarch0
+Endpoint:  unix:///var/run/docker.sock
+Status:    running
+Platforms: linux/arm64, linux/amd64, linux/amd64/v2, linux/riscv64,
+           linux/ppc64le, linux/s390x, linux/386, linux/mips64le, linux/mips64,
+           linux/arm/v7, linux/arm/v6
+```
+
+`Ubuntu 20.04` been exclusively x64, only x64 architecture must be considered.
+
 <div id="build" />
 
 ### Build
@@ -70,9 +111,10 @@ gpfister/firebase-devenv                                  latest    5fe9772cc4d1
 
 You may alter the `package.json` should you want to have different tags or
 names, however if you PR your change, it will be rejected. The ideal solution
-is to run the `docker build` command.
+is to run the `docker build` command instead of the changing the provided
+scripts.
 
-<div id="run">
+<div id="run" />
 
 ## Run a container
 
@@ -84,7 +126,7 @@ $ npm run start
 
 It should create a container and name it `firebase-devenv-<VERSION>-test`.
 
-<div id="scan">
+<div id="scan" />
 
 ### Scan
 
@@ -94,7 +136,7 @@ To scan the image, simple run:
 npm run scan
 ```
 
-<div id="build-from-this-image">
+<div id="build-from-this-image" />
 
 ## Build from this image
 
@@ -120,14 +162,16 @@ USER vscode
 **Important:** unless you really want to use the root user, you should always
 make sure the `vscode` is the last one activate.
 
-<div id="version">
+<div id="version" />
 
 ## Version
 
-| Image |  Ubuntu     | Node       |  NPM  |  Firebase Tools | Angular | Java                          |
-| ----- | ----------- | ---------- | ----- | --------------- | ------- | ----------------------------- |
-| 0.1.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.5.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |
-| 0.2.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |
+| Image |  Ubuntu     | Node       |  NPM  |  Firebase Tools | Angular | Java                          | amd64 | arm64 | arm/v7 |
+| ----- | ----------- | ---------- | ----- | --------------- | ------- | ----------------------------- | :---: | :---: | :----: |
+| 0.1.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.5.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |        |
+| 0.2.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |        |
+| 0.3.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |        |
+| 0.4.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |   X   |   X   |   X    |
 
 <div id="faq" />
 
@@ -136,7 +180,7 @@ make sure the `vscode` is the last one activate.
 1. [How to require password for sudo command ?](#faq1)
 2. [Is there an example to use it with Visual Studio Code ?](#faq2)
 
-<div id="faq1">
+<div id="faq1" />
 
 ### 1. How to require password for sudo command ?
 
@@ -179,7 +223,7 @@ RUN rm /etc/sudoers.d/vscode && \
 USER vscode
 ```
 
-<div id="faq2">
+<div id="faq2"/>
 
 ### 2. Is there an example to use it with Visual Studio Code ?
 
