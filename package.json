@@ -6,15 +6,18 @@
   "scripts": {
     "start": "docker run --name firebase-devenv-$npm_package_version-test -it gpfister/firebase-devenv:$npm_package_version /bin/zsh",
     "start:develop": "docker run --name firebase-devenv-develop-test -it gpfister/firebase-devenv:develop /bin/zsh",
-    "build": "npm run build:version && npm run build:latest",
+    "build": "npm run build:version && npm run build:target",
     "build:version": "docker build --no-cache -t gpfister/firebase-devenv:$npm_package_version .",
     "build:latest": "docker build -t gpfister/firebase-devenv:latest .",
+    "buildx": "npm run buildx:version && npm run buildx:latest",
+    "buildx:version": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:$npm_package_version .",
+    "buildx:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:latest .",
     "build:develop": "docker build --no-cache -t gpfister/firebase-devenv:develop .",
+    "buildx:develop": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:develop .",
     "scan": "docker scan -f Dockerfile gpfister/firebase-devenv:$npm_package_version",
     "push": "npm run push:version && npm run push:latest",
-    "push:version": "docker push gpfister/firebase-devenv:$npm_package_version",
-    "push:latest": "docker push gpfister/firebase-devenv:latest",
-    "prune:develop": "docker container rm firebase-devenv-develop-test"
+    "push:version": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:$npm_package_version --push .",
+    "push:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:latest --push ."
   },
   "repository": {
     "type": "git",
