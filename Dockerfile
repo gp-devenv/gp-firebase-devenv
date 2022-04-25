@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # Timezone
 ENV TZ="Europe/Paris"
@@ -6,7 +6,7 @@ ENV TZ="Europe/Paris"
 # Versions
 ENV NODE_VERSION="16.x"
 ENV NPM_VERSION="8.7"
-ENV FIREBASE_TOOLS_VERSION="10.7.0"
+ENV FIREBASE_TOOLS_VERSION="10.7.1"
 ENV ANGULAR_VERSION="13.3.3"
 
 VOLUME [ "/home" ]
