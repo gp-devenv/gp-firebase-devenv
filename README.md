@@ -175,7 +175,7 @@ make sure the `vscode` is the last one activate.
 | 0.2.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |
 | 0.3.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |
 | 0.4.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| develop |        0.1.0        | 20.04 (LTS) | 16.x (LTS) | 8.10.0 | 10.9.2          |  13.3.5 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 0.5.0   |        0.1.0        | 20.04 (LTS) | 16.x (LTS) | 8.10.0 | 10.9.6          |  13.3.5 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 
 <div id="faq" />
 
