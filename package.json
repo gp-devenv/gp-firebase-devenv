@@ -1,7 +1,7 @@
 {
   "name": "firebase-devenv",
   "version": "0.4.0",
-  "description": "Build and upload Docker dev envrionment suitable for Typescript with Firebase/Angular",
+  "description": "Base image for building Ubuntu based (20.04) dev containers for VS Code for Firebase projects",
   "main": "index.js",
   "scripts": {
     "start": "docker run --name firebase-devenv-$npm_package_version-test -it gpfister/firebase-devenv:$npm_package_version /bin/zsh",
@@ -10,14 +10,14 @@
     "build:version": "docker build --no-cache -t gpfister/firebase-devenv:$npm_package_version .",
     "build:latest": "docker build -t gpfister/firebase-devenv:latest .",
     "buildx": "npm run buildx:version && npm run buildx:latest",
-    "buildx:version": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:$npm_package_version .",
-    "buildx:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:latest .",
+    "buildx:version": "docker buildx build --no-cache --platform linux/arm64,linux/amd64 -t gpfister/firebase-devenv:$npm_package_version .",
+    "buildx:latest": "docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/firebase-devenv:latest .",
     "build:develop": "docker build --no-cache -t gpfister/firebase-devenv:develop .",
-    "buildx:develop": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:develop .",
+    "buildx:develop": "docker buildx build --no-cache --platform linux/arm64,linux/amd64 -t gpfister/firebase-devenv:develop .",
     "scan": "docker scan -f Dockerfile gpfister/firebase-devenv:$npm_package_version",
     "push": "npm run push:version && npm run push:latest",
-    "push:version": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:$npm_package_version --push .",
-    "push:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/firebase-devenv:latest --push ."
+    "push:version": "docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/firebase-devenv:$npm_package_version --push .",
+    "push:latest": "docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/firebase-devenv:latest --push ."
   },
   "repository": {
     "type": "git",

@@ -1,29 +1,18 @@
-FROM ubuntu:20.04
-
-# Timezone
-ENV TZ="Europe/Paris"
+FROM gpfister/base-devenv:20.04-0.1.0
 
 # Versions
 ENV NODE_VERSION="16.x"
-ENV NPM_VERSION="8.7"
-ENV FIREBASE_TOOLS_VERSION="10.7.0"
-ENV ANGULAR_VERSION="13.3.3"
+ENV NPM_VERSION="8.10"
+ENV FIREBASE_TOOLS_VERSION="10.9.0"
+ENV ANGULAR_VERSION="13.3.5"
 
-VOLUME [ "/home" ]
-
-# Set the timezone
-RUN apt-get update && \
-    apt-get install tzdata -y
+USER root
 
 # Update all
 RUN apt-get update && \
-    apt-get full-upgrade -y
-
-# Install essential packages
-RUN apt-get update && \
-    apt-get install -y build-essential curl wget software-properties-common && \
-    apt-get autoclean -y && \
-    apt-get autoremove -y
+    apt-get full-upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get autoclean
 
 # Install node
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
@@ -41,41 +30,11 @@ RUN apt-get update && \
     apt-get autoclean -y && \
     apt-get autoremove -y
 
-# Powerlevel 10K
-WORKDIR /opt
-RUN git clone https://github.com/romkatv/powerlevel10k.git
-
-# Setup sudo
-RUN apt-get update && \
-    apt-get install -y sudo
-RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
-
 # Add chromium
 RUN add-apt-repository ppa:saiarcot895/chromium-dev && \ 
     apt-get update && \
     apt-get install -y chromium-browser
 ENV CHROME_BIN=/usr/bin/chromium-browser
 
-# Default for users
-WORKDIR /etc/skel
-COPY .zshrc .
-COPY .p10k.zsh .
-COPY .vimrc .
-
-# Adjust root user
-WORKDIR /root
-RUN chsh -s /bin/zsh root && \
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-COPY .zshrc .
-COPY .p10k.zsh .
-COPY .vimrc .
-RUN vim +'PlugInstall --sync' +qa
-
-# Add vscode user
-RUN useradd -s /bin/zsh -m vscode \
- && groupadd docker \
- && usermod -aG docker vscode
 USER vscode
 WORKDIR /home/vscode
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-RUN vim +'PlugInstall --sync' +qa
