@@ -1,9 +1,9 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-20.04-orange)](https://ubuntu.com)
+[![Docker](https://img.shields.io/badge/docker-hub-blue)](https://hub.docker.com/repository/docker/gpfister/firebase-devenv)
 
-[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](./LICENSE)
-[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](./LICENSE)
-[![AMD64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)](./LICENSE)
+[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/firebase-devenv/tags)
+[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/firebase-devenv/tags)
 
 # Firebase Dev Environment
 
@@ -20,16 +20,19 @@ Remote Container feature.
 See [version](#version) mapping to find out which version Ubuntu, node, npm,
 firebase-tools, angular and java.
 
-Along with the basic requirements, the image provides:
+This image is built from
+[gpfister/base-devenv](https://hub.docker.com/repository/docker/gpfister/base-devenv)
+and adds
 
-- zsh
-- vim with a few plugins (airline, syntastic, ripgrep, nerdcommenter,
-  vim-colorschemes, ctrlp.vim)
-- additionnal tools like `less`, `curl`, `nmap`, ...
-- a `vscode` user account
-- `sudo` passwordless commands
+- a node environment compatible with Firebase and Angular 13.
 - `chromium` (actually `chromium-browser` on Ubuntu:20.04), for Angular unit
-  testing
+  testing.
+
+Please find [here](https://github.com/gpfister/base-devenv#README) the details
+for base image.
+
+The image can be found on
+[Docker Hub](https://hub.docker.com/repository/docker/gpfister/base-devenv).
 
 <div id="volumes" />
 
@@ -166,12 +169,13 @@ make sure the `vscode` is the last one activate.
 
 ## Version
 
-| Image |  Ubuntu     | Node       |  NPM  |  Firebase Tools | Angular | Java                          | amd64 | arm64 | arm/v7 |
-| ----- | ----------- | ---------- | ----- | --------------- | ------- | ----------------------------- | :---: | :---: | :----: |
-| 0.1.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.5.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |        |
-| 0.2.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |        |
-| 0.3.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |        |
-| 0.4.0 | 20.04 (LTS) | 16.x (LTS) | 8.7.0 | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |   X   |   X   |   X    |
+| Image   |  Base image version | Ubuntu      | Node       |  NPM   |  Firebase Tools | Angular | Java                          | amd64 | arm64 |
+| ------- | :-----------------: | ----------- | ---------- | ------ | --------------- | ------- | ----------------------------- | :---: | :---: |
+| 0.1.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.5.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |
+| 0.2.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |
+| 0.3.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |       |   X   |
+| 0.4.0   |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  | 10.7.0          |  13.3.3 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| develop |        0.1.0        | 20.04 (LTS) | 16.x (LTS) | 8.10.0 | 10.9.2          |  13.3.5 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 
 <div id="faq" />
 
