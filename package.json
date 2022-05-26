@@ -1,6 +1,6 @@
 {
   "name": "firebase-devenv",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Base image for building Ubuntu based (20.04) dev containers for VS Code for Firebase projects",
   "main": "index.js",
   "scripts": {
