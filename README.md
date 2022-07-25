@@ -180,6 +180,7 @@ _`Base image version` correspond to the undelying base image that can be found
 | 0.4.0 |          -          | 20.04 (LTS) | 16.x (LTS) | 8.7.0  |     10.7.0      |  13.3.3 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 | 0.5.0 |        0.1.0        | 20.04 (LTS) | 16.x (LTS) | 8.10.0 |     10.9.6      |  13.3.5 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 | 0.6.0 |        0.1.0        | 20.04 (LTS) | 16.x (LTS) | 8.10.0 |     11.0.1      |  13.3.6 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 0.7.0 |        0.2.0        | 20.04 (LTS) | 16.x (LTS) | 8.14.0 |     11.3.0      |  14.1.0 | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 
 <div id="faq" />
 
