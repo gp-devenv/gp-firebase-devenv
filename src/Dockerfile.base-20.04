@@ -1,0 +1,56 @@
+#
+# gp-firebase-devenv
+# Copyright (c) 2023, Greg PFISTER. MIT License.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+FROM ghcr.io/gpfister/gp-base-devenv:20.04-1.0.0
+
+LABEL org.opencontainers.image.source=https://github.com/gpfister/gp-firebase-devenv
+LABEL org.opencontainers.image.description "Firebase dev image using ghcr.io/gpfister/gp-base-devenv:20.04-1.0.0"
+LABEL org.opencontainers.image.licenses=MIT
+
+# Versions
+ENV NODE_VERSION="18.x"
+ENV JAVA_VERSION="11"
+
+USER root
+
+# Update all
+RUN apt-get update && \
+    apt-get full-upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get autoclean
+
+# Install node
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
+    apt-get install -y nodejs && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y
+
+# Update npm
+RUN npm i -g npm@latest firebase-tools@latest @angular/cli@latest
+
+# Install Java
+RUN apt-get update && \
+    apt-get install -y -o DPkg::Options::=--force-confdef openjdk-${JAVA_VERSION}-jre-headless git imagemagick && \
+    # apt-get install -y less ncdu nmap zsh zsh-theme-powerlevel9k vim vim-airline vim-airline-themes && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y
+
+# Add chromium
+RUN add-apt-repository ppa:saiarcot895/chromium-dev && \ 
+    apt-get update && \
+    apt-get install -y chromium-browser
+ENV CHROME_BIN=/usr/bin/chromium-browser
+
+# Switch back to user
+USER vscode
+WORKDIR /home/vscode
