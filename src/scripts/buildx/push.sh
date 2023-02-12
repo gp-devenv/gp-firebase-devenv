@@ -17,7 +17,7 @@ set -e
 
 TIMESTAMP=$(date +"%Y%m%d")
 VERSION=`cat .version`
-DOCKERFILE=`echo "./Dockerfile.ubuntu-"$1`
+DOCKERFILE=`echo "./Dockerfile.base-"$1`
 IMAGE_NAME="`cat .image_name`"
 IMAGE="$IMAGE_NAME:$1"
 IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
