@@ -1,9 +1,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
-[![Ubuntu](https://img.shields.io/badge/ubuntu-20.04-orange)](https://ubuntu.com)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
-
-[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/firebase-devenv/tags)
-[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/firebase-devenv/tags)
+![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
+![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
 # Firebase Dev Environment
 
@@ -17,7 +15,7 @@ This is a simple Ubuntu container to use as development environment for Firebase
 projects using Node, Typescript and Angular, which I use with Visual Studio Code
 Remote Container feature.
 
-This is image is provided with both Ubuntu 20.04 and Ubuntu 22.04.
+This is image is provided with Ubuntu 22.04.
 
 See [version](#version) mapping to find out which version Ubuntu and node and java.
 
@@ -26,8 +24,7 @@ This image is built from
 and adds
 
 - a node environment to build Firebase and Angular apps.
-- `chromium` (actually `chromium-browser` on Ubuntu:20.04), for Angular unit
-  testing.
+- `chromium` for Angular unit testing.
 
 <div id="volumes" />
 
@@ -125,35 +122,53 @@ Once the previous step is completed, simpy run to build the current version:
 To build using a specific Ubuntu version, use:
 
 ```sh
-(cd scr && ./scripts/dev/build.sh <UBUNTU_VERSION>)
+(cd scr && ./scripts/dev/image/build.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` can be 20.04 or 22.04.
+where `UBUNTU_VERSION` must 22.04.
 
 It will create and image `gpfister/gp-firebase-devenv` tagged with the current
-version (see `src/.version` file) and `-dev` suffix. For example:
-
-```sh
-REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
-gpfister/gp-firebase-devenv      22.04-1.0.0-dev   21a32a4c2177   11 minutes ago   916MB
-gpfister/gp-firebase-devenv      20.04-1.0.0-dev   466450fda71c   12 minutes ago   873MB
-```
+version (see `src/.version` file) and `-dev` suffix.
 
 You may alter the `.src/.version` file should you want to have different tags or
 names, however if you PR your change, it will be rejected. The ideal solution
 is to run the `docker build` command instead.
 
+To remove the created image (named:
+`ghcr.io/gpfister/gp-firebase-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
+
+```sh
+(cd scr && ./scripts/dev/image/rm.sh <UBUNTU_VERSION>)
+```
+
 <div id="run" />
 
-## Run a container
+## Run or create/start/stop/exec a container
 
 To run an interactive container of a give Ubuntu version, simple use:
 
 ```sh
-(cd src && ./scripts/dev/start.sh <UBUNTU_VERSION>)
+(cd src && ./scripts/dev/container/run.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` can be 20.04 or 22.04.
+where `UBUNTU_VERSION` must 22.04.
+
+Alternatively, you can create and start a container to run in background, and
+execute scripts on this container, using the following scripts:
+
+| Action | Script                                                                   |
+| ------ | ------------------------------------------------------------------------ |
+| create | `(cd src && ./scripts/dev/container/create.sh <UBUNTU_VERSION>)`         |
+| start  | `(cd src && ./scripts/dev/container/start.sh <UBUNTU_VERSION>)`          |
+| stop   | `(cd src && ./scripts/dev/container/stop.sh <UBUNTU_VERSION>)`           |
+| exec   | `(cd src && ./scripts/dev/container/exec.sh <UBUNTU_VERSION>) <COMMAND>` |
+
+To remove the created container (named:
+`gp-firebase-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
+
+```sh
+(cd src && ./scripts/dev/container/rm.sh <UBUNTU_VERSION>)
+```
 
 <div id="scan" />
 
@@ -165,7 +180,7 @@ To scan the image of a give Ubuntu version, simple use:
 (cd src && ./scripts/dev/scan.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` can be 20.04 or 22.04.
+where `UBUNTU_VERSION` must be 22.04.
 
 <div id="build-from-this-image" />
 
@@ -176,7 +191,7 @@ image. For example, here's the way to set the image to a different timezone than
 "Europe/Paris" (the default one):
 
 ```Dockerfile
-FROM ghcr.io/gpfister/gpfirebase-devenv:22.04
+FROM ghcr.io/gpfister/gp-firebase-devenv:22.04
 
 ENV TZ="America/New_York"
 
@@ -202,7 +217,6 @@ _`Base image version` correspond to the undelying base image that can be found
 
 |    Image    |           Base image version          |   Ubuntu    |    Node    |              Java             | amd64 | arm64 |
 | :---------: | :-----------------------------------: | :---------: | :--------: | :---------------------------: | :---: | :---: |
-| 20:04-1.0.0 | ghcr.io/gpfister/gp-base-devenv:20.04 | 20.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 | 22:04-1.0.0 | ghcr.io/gpfister/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 
 <div id="faq" />
@@ -220,7 +234,7 @@ You will have to [build from this image](#build-from-this-image) to disable the
 the password less sudo command. Typically create a `Dockerfile` like:
 
 ```Dockerfile
-FROM ghcr.io/gpfister/gpfirebase-devenv:22.04
+FROM ghcr.io/gpfister/gp-firebase-devenv:22.04
 
 ARG VSCODE_PASSWORD="dummy"
 
@@ -242,7 +256,7 @@ If you simply want to get rid of `sudo`:
 
 ```Dockerfile
 
-FROM ghcr.io/gpfister/gpfirebase-devenv:22.04
+FROM ghcr.io/gpfister/gp-firebase-devenv:22.04
 
 # Switch to root to make changes
 USER root
