@@ -15,12 +15,11 @@
 
 set -e
 
-VERSION=`cat .version`-dev
-IMAGE_NAME="`cat .image_name`"
+VERSION=$(echo "`cat .version`-dev")
+IMAGE_NAME=$(cat .image_name)
 IMAGE="$IMAGE_NAME:$1-$VERSION"
-CONTAINER="`cat .image_name | sed -e 's/gpfister\///g'`-$1-$VERSION"
+CONTAINER=$(echo "`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gpfister\///g'`-$1-$VERSION")
 
-docker run --user vscode \
-           --name $CONTAINER \
-           -it $IMAGE \
-           /bin/zsh
+docker container stop $CONTAINER
+
+# End

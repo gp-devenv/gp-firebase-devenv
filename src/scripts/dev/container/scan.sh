@@ -15,9 +15,16 @@
 
 set -e
 
-VERSION=`cat .version`-dev
+VERSION="`cat .version`-dev"
+DOCKERFILE=`echo "./Dockerfile."$1`
 IMAGE_NAME="`cat .image_name`"
 IMAGE="$IMAGE_NAME:$1-$VERSION"
-CONTAINER="`cat .image_name | sed -e 's/ghcr.io//g' -e 's/gpfister\///g'`-$1-$VERSION"
 
-docker container rm $CONTAINER
+if [ ! -f "$DOCKERFILE" ]; then
+    echo "Dockerfile '$DOCKERFILE' not found"
+    exit 1
+fi
+
+docker scan $IMAGE -f "$DOCKERFILE" --accept-license 
+
+# End

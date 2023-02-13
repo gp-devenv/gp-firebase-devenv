@@ -15,13 +15,16 @@
 
 set -e
 
-echo "Setup docker buildx: multiarch..."
-docker buildx create --name multiarch
+VERSION="`cat .version`-dev"
+DOCKERFILE=`echo "./Dockerfile."$1`
+IMAGE_NAME="`cat .image_name`"
+IMAGE="$IMAGE_NAME:$1-$VERSION"
 
-echo "Activating docker buildx: multiarch..."
-docker buildx use multiarch
+if [ ! -f "$DOCKERFILE" ]; then
+    echo "Dockerfile '$DOCKERFILE' not found"
+    exit 1
+fi
 
-echo "Inspecting result:"
-docker buildx inspect --bootstrap
+docker build --no-cache -t $IMAGE -f $DOCKERFILE .
 
 # End
