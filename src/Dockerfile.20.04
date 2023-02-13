@@ -54,3 +54,5 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 # Switch back to user
 USER vscode
 WORKDIR /home/vscode
+
+ENTRYPOINT ["sudo", "/entrypoint.sh"]

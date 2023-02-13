@@ -24,3 +24,5 @@ docker run --user vscode \
            --name $CONTAINER \
            -it $IMAGE \
            /bin/zsh
+
+# End

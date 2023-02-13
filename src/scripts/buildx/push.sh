@@ -38,3 +38,5 @@ docker buildx build --push \
                     -t $IMAGE_VERSION_MAJOR \
                     -t $IMAGE_VERSION_MINOR \
                     -f "$DOCKERFILE" .
+
+# End
