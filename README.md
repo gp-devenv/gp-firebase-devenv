@@ -19,11 +19,11 @@ This is image is provided with Ubuntu 22.04.
 See [version](#version) mapping to find out which version Ubuntu and node and java.
 
 This image is built from
-[ghcr.io/gp-devenv/gp-base-devenv](https://github.com/gp-devenv/gp-base-devenv/pkgs/container/gp-base-devenv)
+[ghcr.io/gp-devenv/gp-node-devenv](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv)
 and adds:
 
 - a node environment to build Firebase.
-- Java (open JRE v11)
+- Java JRE v11 (open-jdk-11-jre-headless)
 
 The image can be found
 [here](https://github.com/gp-devenv/gp-firebase-devenv/pkgs/container/gp-firebase-devenv).
@@ -216,14 +216,14 @@ make sure the `vscode` is the last one activate.
 
 ## Version
 
-_`Base image version` correspond to the undelying base image that can be found
-[here](https://github.com/gp-devenv/gp-base-devenv/pkgs/container/gp-base-devenv)_
+_`Node.js image version` correspond to the undelying base image that can be found
+[here](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv)_
 
-|    Image    |           Base image version           |   Ubuntu    |    Node    |              Java             | amd64 | arm64 |
-| :---------: | :------------------------------------: | :---------: | :--------: | :---------------------------: | :---: | :---: |
-| 22:04-1.0.0 | ghcr.io/gp-devenv/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| 22:04-1.1.0 | ghcr.io/gp-devenv/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| 22:04-1.2.0 | ghcr.io/gp-devenv/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+|    Image     |            Node.js image version            |   Ubuntu    |    Node    |              Java             | amd64 | arm64 |
+| :----------: | :-----------------------------------------: | :---------: | :--------: | :---------------------------: | :---: | :---: |
+| 22:04-14-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-14-1 | 22.04 (LTS) | 14.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 22:04-16-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-16-1 | 22.04 (LTS) | 16.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 22:04-18-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-18-1 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 
 <div id="faq" />
 
@@ -240,7 +240,7 @@ You will have to [build from this image](#build-from-this-image) to disable the
 the password less sudo command. Typically create a `Dockerfile` like:
 
 ```Dockerfile
-FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04-18-1
 
 ARG VSCODE_PASSWORD="dummy"
 
@@ -262,7 +262,7 @@ If you simply want to get rid of `sudo`:
 
 ```Dockerfile
 
-FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04-18-1
 
 # Switch to root to make changes
 USER root

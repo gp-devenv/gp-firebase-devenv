@@ -40,7 +40,7 @@ jobs:
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
           GHCR_IO_TOKEN: ${{ secrets.ghcr_io_token }}
-      - name: Build using ghcr.io/gp-devenv/gp-base-devenv:${{ github.event.inputs.ubuntuVersion }}-${{ github.event.inputs.nodeVersion }}
+      - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ github.event.inputs.ubuntuVersion }}-${{ github.event.inputs.nodeVersion }}
         run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ github.event.inputs.ubuntuVersion }}
