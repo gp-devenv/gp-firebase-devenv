@@ -3,7 +3,7 @@
 ![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
 ![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
-# Firebase Dev Environment
+# gp-node-devenv: Build a Firebase dev containers for VSCode
 
 Copyright (c) 2023, Greg PFISTER. MIT License
 
@@ -12,19 +12,21 @@ Copyright (c) 2023, Greg PFISTER. MIT License
 ## About
 
 This is a simple Ubuntu container to use as development environment for Firebase
-projects using Node, Typescript and Angular, which I use with Visual Studio Code
-Remote Container feature.
+projects using Node.
 
 This is image is provided with Ubuntu 22.04.
 
 See [version](#version) mapping to find out which version Ubuntu and node and java.
 
 This image is built from
-[ghcr.io/gpfister/gp-base-devenv](https://github.com/gpfister/gp-base-devenv/pkgs/container/gp-base-devenv)
-and adds
+[ghcr.io/gp-devenv/gp-node-devenv](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv)
+and adds:
 
-- a node environment to build Firebase and Angular apps.
-- `chromium` for Angular unit testing.
+- a node environment to build Firebase.
+- Java JRE v11 (open-jdk-11-jre-headless)
+
+The image can be found
+[here](https://github.com/gp-devenv/gp-firebase-devenv/pkgs/container/gp-firebase-devenv).
 
 <div id="volumes" />
 
@@ -50,14 +52,14 @@ or adding or removing something significant (minor change) or breaking (major).
 
 For example:
 
-| Image                                           | Description                               |
-| ----------------------------------------------- | ----------------------------------------- |
-| ghcr.io/gpfister/gp-firebase-devenv:22.04       | The latest build using Ubuntu 22.04       |
-| ghcr.io/gpfister/gp-firebase-devenv:22.04-1     | The latest build 1.x using Ubuntu 22.04   |
-| ghcr.io/gpfister/gp-firebase-devenv:22.04-1.1   | The latest build 1.1.x using Ubuntu 22.04 |
-| ghcr.io/gpfister/gp-firebase-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |
-| ghcr.io/gpfister/gp-firebase-devenv:22.04-1.0   | The latest build 1.0.x using Ubuntu 22.04 |
-| ghcr.io/gpfister/gp-firebase-devenv:22.04-1.0.0 | The latest build 1.0.0 using Ubuntu 22.04 |
+| Image                                            | Description                               |
+| ------------------------------------------------ | ----------------------------------------- |
+| ghcr.io/gp-devenv/gp-firebase-devenv:22.04       | The latest build using Ubuntu 22.04       |
+| ghcr.io/gp-devenv/gp-firebase-devenv:22.04-1     | The latest build 1.x using Ubuntu 22.04   |
+| ghcr.io/gp-devenv/gp-firebase-devenv:22.04-1.1   | The latest build 1.1.x using Ubuntu 22.04 |
+| ghcr.io/gp-devenv/gp-firebase-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |
+| ghcr.io/gp-devenv/gp-firebase-devenv:22.04-1.0   | The latest build 1.0.x using Ubuntu 22.04 |
+| ghcr.io/gp-devenv/gp-firebase-devenv:22.04-1.0.0 | The latest build 1.0.0 using Ubuntu 22.04 |
 
 For CI/CD, the build version is store in `.version` file. The build version is
 in the format
@@ -129,7 +131,7 @@ To build using a specific Ubuntu version, use:
 
 where `UBUNTU_VERSION` must 22.04.
 
-It will create and image `gpfister/gp-firebase-devenv` tagged with the current
+It will create and image `ghcr.io/gp-devenv/gp-firebase-devenv` tagged with the current
 version (see `src/.version` file) and `-dev` suffix.
 
 You may alter the `.src/.version` file should you want to have different tags or
@@ -137,7 +139,7 @@ names, however if you PR your change, it will be rejected. The ideal solution
 is to run the `docker build` command instead.
 
 To remove the created image (named:
-`ghcr.io/gpfister/gp-firebase-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
+`ghcr.io/gp-devenv/gp-firebase-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
 
 ```sh
 (cd scr && ./scripts/dev/image/rm.sh <UBUNTU_VERSION>)
@@ -193,7 +195,7 @@ image. For example, here's the way to set the image to a different timezone than
 "Europe/Paris" (the default one):
 
 ```Dockerfile
-FROM ghcr.io/gpfister/gp-firebase-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04
 
 ENV TZ="America/New_York"
 
@@ -214,14 +216,14 @@ make sure the `vscode` is the last one activate.
 
 ## Version
 
-_`Base image version` correspond to the undelying base image that can be found
-[here](https://github.com/gpfister/gp-base-devenv/pkgs/container/gp-base-devenv)_
+_`Node.js image version` correspond to the undelying base image that can be found
+[here](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv)_
 
-|    Image    |           Base image version          |   Ubuntu    |    Node    |              Java             | amd64 | arm64 |
-| :---------: | :-----------------------------------: | :---------: | :--------: | :---------------------------: | :---: | :---: |
-| 22:04-1.0.0 | ghcr.io/gpfister/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| 22:04-1.1.0 | ghcr.io/gpfister/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| 22:04-1.2.0 | ghcr.io/gpfister/gp-base-devenv:22.04 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+|    Image     |            Node.js image version            |   Ubuntu    |    Node    |              Java             | amd64 | arm64 |
+| :----------: | :-----------------------------------------: | :---------: | :--------: | :---------------------------: | :---: | :---: |
+| 22:04-14-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-14-1 | 22.04 (LTS) | 14.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 22:04-16-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-16-1 | 22.04 (LTS) | 16.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 22:04-18-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-18-1 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
 
 <div id="faq" />
 
@@ -238,7 +240,7 @@ You will have to [build from this image](#build-from-this-image) to disable the
 the password less sudo command. Typically create a `Dockerfile` like:
 
 ```Dockerfile
-FROM ghcr.io/gpfister/gp-firebase-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04-18-1
 
 ARG VSCODE_PASSWORD="dummy"
 
@@ -260,7 +262,7 @@ If you simply want to get rid of `sudo`:
 
 ```Dockerfile
 
-FROM ghcr.io/gpfister/gp-firebase-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-firebase-devenv:22.04-18-1
 
 # Switch to root to make changes
 USER root

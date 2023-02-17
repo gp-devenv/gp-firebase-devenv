@@ -21,11 +21,12 @@ on:
 
 jobs:
   deploy:
-    name: Push ghcr.io/gpfister/gp-firebase-devenv
+    name: Push ghcr.io/gp-devenv/gp-firebase-devenv
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        ubuntuVersion: ['22.04']
+        ubuntuNodeVersion: ['22.04']
+        nodeVersion: ['14', '16', '18']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,8 +36,14 @@ jobs:
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
-      - name: Build using ghcr.io/gpfister/gp-base-devenv:${{ matrix.ubuntuVersion }}
-        run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntuVersion }})
-      - name: Push to ghcr.io/gpfister/gp-firebase-devenv:${{ matrix.ubuntuVersion }}
-        run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntuVersion }})
+      - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
+        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
+        env:
+          UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
+          NODE_VERSION: ${{ matrix.nodeVersion }}
+      - name: Push to ghcr.io/gp-devenv/gp-firebase-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
+        run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION $NODE_VERSION)
+        env:
+          UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
+          NODE_VERSION: ${{ matrix.nodeVersion }}
 # End

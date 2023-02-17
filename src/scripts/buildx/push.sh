@@ -15,15 +15,25 @@
 
 set -e
 
+if [ -z "$1" ]; then
+    echo "Usage: $0 <UBUNUT_VERSION> <NODE_VERSION>"
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    echo "Usage: $0 <UBUNUT_VERSION> <NODE_VERSION>"
+    exit 1
+fi
+
 VERSION=$(cat .version)
 VERSION_MAJOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1/')
 VERSION_MINOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1.\2/')
-DOCKERFILE=$(echo "./Dockerfile."$1)
+DOCKERFILE=$(echo "./Dockerfile."$1-$2)
 IMAGE_NAME=$(cat .image_name)
-IMAGE="$IMAGE_NAME:$1"
-IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
-IMAGE_VERSION_MAJOR="$IMAGE_NAME:$1-$VERSION_MAJOR"
-IMAGE_VERSION_MINOR="$IMAGE_NAME:$1-$VERSION_MINOR"
+IMAGE="$IMAGE_NAME:$1-$2"
+IMAGE_VERSION="$IMAGE_NAME:$1-$2-$VERSION"
+IMAGE_VERSION_MAJOR="$IMAGE_NAME:$1-$2-$VERSION_MAJOR"
+IMAGE_VERSION_MINOR="$IMAGE_NAME:$1-$2-$VERSION_MINOR"
 
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Dockerfile '$DOCKERFILE' not found"
@@ -32,6 +42,7 @@ fi
 
 docker buildx build --push \
                     --platform linux/arm64,linux/amd64 \
+                    --build-arg NODE_VERSION="$2" \
                     -t $IMAGE \
                     -t $IMAGE_VERSION \
                     -t $IMAGE_VERSION_MAJOR \
@@ -39,6 +50,7 @@ docker buildx build --push \
                     -f "$DOCKERFILE" .
 docker buildx build --push \
                     --platform linux/arm64 \
+                    --build-arg NODE_VERSION="$2" \
                     -t $IMAGE-arm64 \
                     -t $IMAGE_VERSION-arm64 \
                     -t $IMAGE_VERSION_MAJOR-arm64 \
@@ -46,6 +58,7 @@ docker buildx build --push \
                     -f "$DOCKERFILE" .
 docker buildx build --push \
                     --platform linux/amd64 \
+                    --build-arg NODE_VERSION="$2" \
                     -t $IMAGE-amd64 \
                     -t $IMAGE_VERSION-amd64 \
                     -t $IMAGE_VERSION_MAJOR-amd64 \
