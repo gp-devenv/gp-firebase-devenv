@@ -23,10 +23,10 @@ on:
 
 jobs:
   build:
-    name: Cleanup untagged images on ghcr.io/gp-devenv/gp-base-devenv
+    name: Cleanup untagged images on ghcr.io/gp-devenv/gp-firebase-devenv
     runs-on: ubuntu-22.04
     steps:
-      - name: Cleanup untagged images on ghcr.io/gp-devenv/gp-base-devenv
+      - name: Cleanup untagged images on ghcr.io/gp-devenv/gp-firebase-devenv
         uses: camargo/delete-untagged-action@v1
         with:
           github-token: ${{ secrets.GHCR_IO_TOKEN }}
