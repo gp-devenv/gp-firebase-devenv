@@ -35,7 +35,7 @@ jobs:
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuVersion }}-${{ matrix.nodeVersion }}
-        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION:)
+        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
           NODE_VERSION: ${{ matrix.nodeVersion }}

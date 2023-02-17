@@ -37,12 +37,12 @@ jobs:
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
       - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
-        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION:)
+        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
           NODE_VERSION: ${{ matrix.nodeVersion }}
       - name: Push to ghcr.io/gp-devenv/gp-firebase-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
-        run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION $NODE_VERSION:)
+        run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
           NODE_VERSION: ${{ matrix.nodeVersion }}
