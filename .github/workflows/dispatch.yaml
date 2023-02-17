@@ -22,10 +22,14 @@ on:
         description: Ubuntu version
         required: true
         type: string
+      nodeVersion:
+        description: Node version
+        required: true
+        type: string
 
 jobs:
   deploy:
-    name: Push ghcr.io/gpfister/gp-firebase-devenv
+    name: Push ghcr.io/gp-devenv/gp-firebase-devenv
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -36,12 +40,14 @@ jobs:
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
           GHCR_IO_TOKEN: ${{ secrets.ghcr_io_token }}
-      - name: Build using ghcr.io/gpfister/gp-base-devenv:${{ github.event.inputs.ubuntuVersion }}
-        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION)
+      - name: Build using ghcr.io/gp-devenv/gp-base-devenv:${{ github.event.inputs.ubuntuVersion }}-${{ github.event.inputs.nodeVersion }}
+        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ github.event.inputs.ubuntuVersion }}
-      - name: Push to ghcr.io/gpfister/gp-firebase-devenv:${{ github.event.inputs.ubuntuVersion }}
-        run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION)
+          NODE_VERSION: ${{ github.event.inputs.nodeVersion }}
+      - name: Push to ghcr.io/gp-devenv/gp-firebase-devenv:${{ github.event.inputs.ubuntuVersion }}-${{ github.event.inputs.nodeVersion }}
+        run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ github.event.inputs.ubuntuVersion }}
+          NODE_VERSION: ${{ github.event.inputs.nodeVersion }}
 # End

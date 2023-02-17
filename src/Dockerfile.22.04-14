@@ -11,14 +11,13 @@
 # SOFTWARE.
 #
 
-FROM ghcr.io/gpfister/gp-base-devenv:22.04-1
+FROM ghcr.io/gp-devenv/gp-node-devenv:22.04-14-1
 
-LABEL org.opencontainers.image.source=https://github.com/gpfister/gp-firebase-devenv
-LABEL org.opencontainers.image.description "Firebase dev image using ghcr.io/gpfister/gp-base-devenv:22.04-1"
+LABEL org.opencontainers.image.source=https://github.com/gp-devenv/gp-firebase-devenv
+LABEL org.opencontainers.image.description "Firebase dev image using ghcr.io/gp-devenv/gp-node-devenv:22.04-14-1"
 LABEL org.opencontainers.image.licenses=MIT
 
 # Versions
-ENV NODE_VERSION="18.x"
 ENV JAVA_VERSION="11"
 
 USER root
@@ -29,30 +28,27 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     apt-get autoclean
 
-# Install node
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
-    apt-get install -y nodejs && \
-    apt-get autoclean -y && \
-    apt-get autoremove -y
-
 # Update npm
-RUN npm i -g npm@latest firebase-tools@latest @angular/cli@latest
+RUN npm i -g firebase-tools@latest @angular/cli@latest
 
 # Install Java
 RUN apt-get update && \
-    apt-get install -y -o DPkg::Options::=--force-confdef openjdk-${JAVA_VERSION}-jre-headless git imagemagick && \
-    # apt-get install -y less ncdu nmap zsh zsh-theme-powerlevel9k vim vim-airline vim-airline-themes && \
+    apt-get install -y -o DPkg::Options::=--force-confdef openjdk-${JAVA_VERSION}-jre-headless imagemagick && \
     apt-get autoclean -y && \
     apt-get autoremove -y
 
-# Add chromium
-RUN add-apt-repository ppa:saiarcot895/chromium-dev && \ 
-    apt-get update && \
-    apt-get install -y chromium-browser
-ENV CHROME_BIN=/usr/bin/chromium-browser
+# # Add chromium
+# RUN add-apt-repository ppa:saiarcot895/chromium-dev && \ 
+#     apt-get update && \
+#     apt-get install -y chromium-browser
+# ENV CHROME_BIN=/usr/bin/chromium-browser
 
 # Switch back to user
 USER vscode
 WORKDIR /home/vscode
 
+EXPOSE 80
+
 ENTRYPOINT ["sudo", "/entrypoint.sh"]
+
+# End

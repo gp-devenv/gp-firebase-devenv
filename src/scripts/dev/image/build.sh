@@ -15,16 +15,32 @@
 
 set -e
 
+if [ -z "$1" ]; then
+    echo "Usage: $0 <UBUNUT_VERSION> <NODE_VERSION>"
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    echo "Usage: $0 <UBUNUT_VERSION> <NODE_VERSION>"
+    exit 1
+fi
+
 VERSION="`cat .version`-dev"
-DOCKERFILE=`echo "./Dockerfile."$1`
+DOCKERFILE=`echo "./Dockerfile."$1-$2`
 IMAGE_NAME="`cat .image_name`"
-IMAGE="$IMAGE_NAME:$1-$VERSION"
+IMAGE="$IMAGE_NAME:$1-$2-$VERSION"
 
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Dockerfile '$DOCKERFILE' not found"
     exit 1
 fi
 
-docker build --no-cache -t $IMAGE -f $DOCKERFILE .
+echo "Building $IMAGE from $DOCKERFILE"
+
+docker build --no-cache \
+                --build-arg NODE_VERSION="$2.x" \
+                -t $IMAGE \
+                -f $DOCKERFILE \
+                .
 
 # End
