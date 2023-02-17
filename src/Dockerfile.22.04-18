@@ -22,11 +22,11 @@ ENV JAVA_VERSION="11"
 
 USER root
 
-# Update all
-RUN apt-get update && \
-    apt-get full-upgrade -y && \
-    apt-get autoremove -y && \
-    apt-get autoclean
+# # Update all
+# RUN apt-get update && \
+#     apt-get full-upgrade -y && \
+#     apt-get autoremove -y && \
+#     apt-get autoclean
 
 # Update npm
 RUN npm i -g firebase-tools@latest
