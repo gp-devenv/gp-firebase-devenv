@@ -22,12 +22,6 @@ ENV JAVA_VERSION="11"
 
 USER root
 
-# Update all
-RUN apt-get update && \
-    apt-get full-upgrade -y && \
-    apt-get autoremove -y && \
-    apt-get autoclean
-
 # Update npm
 RUN npm i -g firebase-tools@latest
 
@@ -36,12 +30,6 @@ RUN apt-get update && \
     apt-get install -y -o DPkg::Options::=--force-confdef openjdk-${JAVA_VERSION}-jre-headless imagemagick && \
     apt-get autoclean -y && \
     apt-get autoremove -y
-
-# # Add chromium
-# RUN add-apt-repository ppa:saiarcot895/chromium-dev && \ 
-#     apt-get update && \
-#     apt-get install -y chromium-browser
-# ENV CHROME_BIN=/usr/bin/chromium-browser
 
 # Switch back to user
 USER vscode
