@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        ubuntuNodeVersion: ['22.04']
+        ubuntuVersion: ['22.04']
         nodeVersion: ['14', '16', '18']
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
-      - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
+      - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuVersion }}-${{ matrix.nodeVersion }}
         run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
