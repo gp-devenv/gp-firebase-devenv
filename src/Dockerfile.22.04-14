@@ -29,7 +29,7 @@ RUN apt-get update && \
     apt-get autoclean
 
 # Update npm
-RUN npm i -g firebase-tools@latest @angular/cli@latest
+RUN npm i -g firebase-tools@latest
 
 # Install Java
 RUN apt-get update && \
