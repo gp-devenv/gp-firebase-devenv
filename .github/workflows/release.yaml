@@ -36,12 +36,12 @@ jobs:
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
-      - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuVersion }}-${{ matrix.nodeVersion }}
-        run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
-        env:
-          UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
-          NODE_VERSION: ${{ matrix.nodeVersion }}
-      - name: Push to ghcr.io/gp-devenv/gp-firebase-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
+      # - name: Build using ghcr.io/gp-devenv/gp-node-devenv:${{ matrix.ubuntuVersion }}-${{ matrix.nodeVersion }}
+      #   run: (cd src && ./scripts/buildx/build.sh $UBUNTU_VERSION $NODE_VERSION)
+      #   env:
+      #     UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
+      #     NODE_VERSION: ${{ matrix.nodeVersion }}
+      - name: Build and push to ghcr.io/gp-devenv/gp-firebase-devenv:${{ matrix.ubuntuNodeVersion }}-${{ matrix.nodeVersion }}
         run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION $NODE_VERSION)
         env:
           UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
