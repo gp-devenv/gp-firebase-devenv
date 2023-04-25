@@ -25,22 +25,13 @@ if [ -z "$2" ]; then
     exit 1
 fi
 
-VERSION="`cat .version`-dev"
-DOCKERFILE=`echo "./Dockerfile."$1-$2`
-IMAGE_NAME="`cat .image_name`"
+VERSION=$(echo "`cat .version`-dev")
+IMAGE_NAME=$(cat .image_name)
 IMAGE="$IMAGE_NAME:$1-$2-$VERSION"
+CONTAINER=$(echo "`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gp-devenv\///g'`-$1-$2-$VERSION")
 
-if [ ! -f "$DOCKERFILE" ]; then
-    echo "Dockerfile '$DOCKERFILE' not found"
-    exit 1
-fi
-
-echo "Building $IMAGE from $DOCKERFILE"
-
-docker build --no-cache \
-                --build-arg NODE_VERSION="$2" \
-                -t $IMAGE \
-                -f $DOCKERFILE \
-                .
+docker exec -it \
+            $CONTAINER \
+            /bin/zsh
 
 # End

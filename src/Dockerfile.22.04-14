@@ -18,7 +18,7 @@ LABEL org.opencontainers.image.description "Firebase dev image using ghcr.io/gp-
 LABEL org.opencontainers.image.licenses=MIT
 
 # Versions
-ENV JAVA_VERSION="11"
+ENV JAVA_VERSION="19"
 
 USER root
 
