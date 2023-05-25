@@ -216,14 +216,13 @@ make sure the `vscode` is the last one activate.
 
 ## Version
 
-_`Node.js image version` correspond to the undelying base image that can be found
+_`Node.js image version` correspond to the underlying Node image that can be found
 [here](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv)_
 
-|    Image     |            Node.js image version            |   Ubuntu    |    Node    |              Java             | amd64 | arm64 |
-| :----------: | :-----------------------------------------: | :---------: | :--------: | :---------------------------: | :---: | :---: |
-| 22:04-14-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-14-1 | 22.04 (LTS) | 14.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| 22:04-16-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-16-1 | 22.04 (LTS) | 16.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
-| 22:04-18-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-18-1 | 22.04 (LTS) | 18.x (LTS) | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+|        Node image        |                  Firebase image version                 |   Ubuntu    |          Supported Node version          |              Java             | amd64 | arm64 |
+| :----------------------: | :-----------------------------------------------------: | :---------: | :--------------------------------------: | :---------------------------: | :---: | :---: |
+| 22:04-<NODE_VERSION>-1.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-<NODE_VERSION>-1 | 22.04 (LTS) |             14.x, 16.x, 18.x             | 11 (open-jdk-11-jre-headless) |   X   |   X   |
+| 22:04-<NODE_VERSION>-2.x | ghcr.io/gp-devenv/gp-node-devenv:22.04-<NODE_VERSION>-1 | 22.04 (LTS) | 14.x (will be removed), 16.x, 18.x, 20.x | 19 (open-jdk-19-jre-headless) |   X   |   X   |
 
 <div id="faq" />
 
